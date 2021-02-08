@@ -11,6 +11,7 @@ class TypeshiftBoard:
         if type(contents) is list:
             self.columns.append(contents)
         elif type(contents) is str:
+            contents = contents.lower()
             self.columns.append(list(contents))
 
     def load_word_list(self):
@@ -50,4 +51,32 @@ class TypeshiftBoard:
             if combo in self.words:
                 self.valid_words.append(combo)
 
+    # This generates an incorrect board in some cases (if there is a blank between two characters)
+    def board_html(self):
+        html = "<table border=0>"
+        for row in range(8):
+            row_html = "<tr>"
+            for col in range(8):
+                try:
+                    cell_value = self.columns[col][row]
+                    row_html += "<td>" + cell_value + "</td>"
+                except IndexError:
+                    pass
+            if row_html != "<tr>":
+                row_html += "</tr>"
+                html += row_html + "\n"
+        html += "</table>\n"
+        return html
 
+    def valid_words_html(self):
+        words = self.valid_words
+        words.sort()
+        html = ""
+        last_start_letter = ""
+        for word in words:
+            if last_start_letter != "" and word[0] != last_start_letter:
+                html += "<br>\n"
+            html += word + " "
+            last_start_letter = word[0]
+
+        return html
