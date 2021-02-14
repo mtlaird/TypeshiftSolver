@@ -1,5 +1,19 @@
 from bottle import route, run, post, request
 from TypeshiftSolver import TypeshiftBoard
+import json
+
+
+def load_config():
+    try:
+        with open('config.json') as f:
+            config = json.load(f)
+    except OSError:
+        config = {}
+    if "host" not in config:
+        config["host"] = "localhost"
+    if "port" not in config:
+        config["port"] = 5432
+    return config
 
 
 def new_puzzle_link():
@@ -47,4 +61,5 @@ def solve_puzzle():
            "<br>\n" + new_puzzle_link()
 
 
-run(host="localhost", port=5234)
+config = load_config()
+run(host=config["host"], port=config["port"])
