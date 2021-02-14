@@ -13,7 +13,7 @@ def index():
 
 @route('/puzzle')
 def new_puzzle():
-    ret_html = 'Enter new puzzle here: <br>\n<form action="/solve" method="post">\n'
+    ret_html = 'Enter new puzzle here: <br>\n<form action="/solve" method="post" autocomplete="off">\n'
 
     base_input = '<input type="text" name="{name}" minlength="0" maxlength="1" size="1">'
     for row in range(8):
