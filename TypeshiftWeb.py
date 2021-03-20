@@ -1,4 +1,4 @@
-from bottle import route, run, post, request
+from bottle import route, run, post, request, default_app
 from TypeshiftSolver import TypeshiftBoard
 import json
 
@@ -61,5 +61,8 @@ def solve_puzzle():
            "<br>\n" + new_puzzle_link()
 
 
-config = load_config()
-run(host=config["host"], port=config["port"])
+if __name__ == '__main__':
+    config = load_config()
+    run(host=config["host"], port=config["port"])
+
+app = default_app()
